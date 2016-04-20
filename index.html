@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css">
     <script src="./javascripts/main.js"></script>
@@ -8,25 +9,19 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>Sequencer by aqilahmisuary</title>
-  </head>
+</head>
 
-  <body>
-
-    
-<header>
-          <h1>SequenceR</h1>
-          <h2>Web Audio Sequencer</h2>
-
-    <div id="btns-location">
-    <button name="button" id="startBtn">Start</button>
-    <button name="button" id="stopBtn">Stop</button>
-    </div>
-
-<p id="inputs"><input type="range" id="myRange"> Tempo <span id="tempoVal"></span></p>
-</header>
-
-
-
+<body>
+    <header>
+        <h1>SequenceR</h1>
+        <h2>Web Audio Sequencer</h2>
+        <div id="btns-location">
+            <button name="button" id="startBtn">Start</button>
+            <button name="button" id="stopBtn">Stop</button>
+        </div>
+        <p id="inputs">
+            <input type="range" id="myRange"> Tempo <span id="tempoVal"></span></p>
+    </header>
     <p>
         <div id="masterKick" class="multiKicks">
             <div id="kick1" class="kicks"></div>
@@ -83,10 +78,10 @@
             <div id="hihat16" class="hihat"></div>
         </div>
     </p>
+    <footer>
+        Sequencer is maintained by <a href="https://github.com/aqilahmisuary">aqilahmisuary</a>
+        <br>
+    </footer>
+</body>
 
-        <footer>
-          Sequencer is maintained by <a href="https://github.com/aqilahmisuary">aqilahmisuary</a><br>
-        </footer>
-
-  </body>
 </html>
