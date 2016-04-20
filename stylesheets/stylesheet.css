@@ -1,4 +1,4 @@
-.kicks, .snare {
+.kicks, .snare, .hihat {
   border-radius: 25px;
   padding: 30px; 
   width: 50px;
@@ -7,4 +7,40 @@
   margin-top: 4px;
   display: inline-block;
   vertical-align: top;
+}
+
+h1, h2, button, span, footer, #inputs {
+  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  font-size: 24px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 26.4px;
+}
+
+h1 {
+  font-size: 44px;
+}
+
+#inputs {
+  font-size: 20px;
+}
+
+h1, h2, footer, p { 
+  text-align: center; 
+  margin-top: 18px;
+}
+
+footer {
+   margin-top: 40px;
+}
+
+button {
+    display: inline-block;
+    margin: 0 auto;  
+    font-size: 18px;   
+}
+
+#btns-location, #masterKick, #masterSnare, #masterHihat {
+  text-align:center;
 }

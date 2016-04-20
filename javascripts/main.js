@@ -15,9 +15,11 @@ var stopBtn = document.getElementById("stopBtn");
 var tempoVal = document.getElementById("tempoVal");
 var kickDivs = document.querySelectorAll(".kicks");
 var snareDivs = document.querySelectorAll(".snare");
+var hihatDivs = document.querySelectorAll(".hihat");
 
 var kicks = Array.prototype.slice.call(kickDivs);
 var snares = Array.prototype.slice.call(snareDivs);
+var hihats = Array.prototype.slice.call(hihatDivs);
 var combinedDivs = kicks.concat(snares);
 
 var initDivs = (function(){
@@ -56,6 +58,7 @@ var initDivs = (function(){
 
 initDivs.set(kickDivs, "pink");
 initDivs.set(snareDivs, "lightskyblue");
+initDivs.set(hihatDivs, "lightgreen");
 
 slider.oninput = function() {
   
@@ -82,6 +85,7 @@ function scheduleNote(beatDivisionNumber, time) {
   if(current16thNote){    
     var currentKickDiv = kickDivs[current16thNote - 1];
     var currentSnareDiv = snareDivs[current16thNote - 1];
+    var currentHihatDiv = hihatDivs[current16thNote - 1];
 
     if(currentSnareDiv.style.backgroundColor == "lightskyblue"){
       snare(time);
@@ -90,9 +94,14 @@ function scheduleNote(beatDivisionNumber, time) {
     if(currentKickDiv.style.backgroundColor == "pink"){
       kick(time);
     };
+
+    if(currentHihatDiv.style.backgroundColor == "lightgreen"){
+      hihat(time);
+    };
     
     nextDiv.kickCount(kicks); 
     nextDiv.snareCount(snares); 
+    nextDiv.hihatCount(hihats); 
   };
     
 };
@@ -198,12 +207,51 @@ function snare(time) {
 
 };
 
+ function hihat(time) {
+
+        var gainOsc4 = audioContext.createGain();
+        var fundamental = 40;
+        var ratios = [
+            2,
+            3,
+            4.16,
+            5.43,
+            6.79,
+            8.21
+        ];
+        var bandpass = audioContext.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.value = 10000;
+        var highpass = audioContext.createBiquadFilter();
+        highpass.type = 'highpass';
+        highpass.frequency.value = 7000;
+        ratios.forEach(function(ratio) {
+            var osc4 = audioContext.createOscillator();
+            osc4.type = 'square';
+            osc4.frequency.value = fundamental * ratio;
+            osc4.connect(bandpass);
+            osc4.start(time);
+            osc4.stop(time + 0.05);
+        });
+
+        gainOsc4.gain.setValueAtTime(1, time);
+        gainOsc4.gain.exponentialRampToValueAtTime(0.01, time + 0.05);
+
+        bandpass.connect(highpass);
+        highpass.connect(gainOsc4);
+        gainOsc4.connect(mixGain);
+
+        mixGain.gain.value = 1;
+};
+
 var nextDiv = (function() {
   
   var countOtherKick = -1; //for black tiles
   var countCurrentKick = 0; //for coloured tiles
   var countCurrentSnare = 0;
   var countOtherSnare = -1;
+  var countCurrentHihat = 0;
+  var countOtherHihat = -1;
   var currentDiv;
   var notCurrentDiv;
   
@@ -236,6 +284,19 @@ var nextDiv = (function() {
            if(countCurrentSnare > 15){
                countOtherSnare = -1; //for black tiles
                countCurrentSnare = 0; 
+           };
+         },
+      hihatCount: function(divType){  
+      
+          notCurrentDiv = divType[++countOtherHihat % divType.length];
+          currentDiv = divType[++countCurrentHihat % divType.length];
+      
+          currentDiv.style.borderRadius = "1000px";
+          notCurrentDiv.style.borderRadius = "25px";
+      
+           if(countCurrentHihat > 15){
+               countOtherHihat = -1; //for black tiles
+               countCurrentHihat = 0; 
            };
       
           //console.log(currentDiv);
