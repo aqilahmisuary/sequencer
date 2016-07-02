@@ -17,10 +17,12 @@ window.onload = function() {
   var kickDivs = document.querySelectorAll(".kicks");
   var snareDivs = document.querySelectorAll(".snare");
   var hihatDivs = document.querySelectorAll(".hihat");
+  var grainDivs = document.querySelectorAll(".grains");
 
   var kicks = Array.prototype.slice.call(kickDivs);
   var snares = Array.prototype.slice.call(snareDivs);
   var hihats = Array.prototype.slice.call(hihatDivs);
+  var grains = Array.prototype.slice.call(grainDivs);
   var combinedDivs = kicks.concat(snares);
 
   var initDivs = (function() {
@@ -60,6 +62,7 @@ window.onload = function() {
   initDivs.set(kickDivs, "pink");
   initDivs.set(snareDivs, "lightskyblue");
   initDivs.set(hihatDivs, "lightgreen");
+  initDivs.set(grainDivs, "lightslategray");
 
   slider.oninput = function() {
 
@@ -87,6 +90,7 @@ window.onload = function() {
       var currentKickDiv = kickDivs[current16thNote - 1];
       var currentSnareDiv = snareDivs[current16thNote - 1];
       var currentHihatDiv = hihatDivs[current16thNote - 1];
+      var currentGrainDiv = grainDivs[current16thNote - 1];
 
       if (currentSnareDiv.style.backgroundColor == "lightskyblue") {
         snare(time);
@@ -100,9 +104,15 @@ window.onload = function() {
         hihat(time);
       };
 
+      if (currentGrainDiv.style.backgroundColor == "lightslategray") {
+        grain(time);
+        console.log("running");
+      };
+
       nextDiv.kickCount(kicks);
       nextDiv.snareCount(snares);
       nextDiv.hihatCount(hihats);
+      nextDiv.grainCount(grains);
     };
 
   };
@@ -245,6 +255,53 @@ window.onload = function() {
     mixGain.gain.value = 1;
   };
 
+  function onError() { console.log("Bad browser! No Web Audio API for you"); }
+
+  (function() {
+
+     var request = new XMLHttpRequest();
+     request.open('GET', "./audio/synthlead.wav", true);
+     request.responseType = 'arraybuffer';
+     request.onload = function() {
+         audioContext.decodeAudioData(request.response, function(arrayBuffer) {
+             buffer = arrayBuffer;
+         }, onError);
+     };
+     request.send();
+
+ }());
+
+  function grain(time) {
+
+      var source = audioContext.createBufferSource();
+      var grainGain = audioContext.createGain();
+      var panNode = audioContext.createStereoPanner();
+      var now = audioContext.currentTime;
+
+      source.buffer = buffer;
+      var soundDuration = source.buffer.duration;
+
+      console.log(buffer);
+
+      var randomParts = Math.random() * (soundDuration - 0.1) + 0.1;
+      //var randomPitch = Math.random() * (2 - -0.5) + -0.5;
+      var randomPan = Math.random() * (1 - -1) + -1;
+
+      panNode.pan.value = randomPan;
+
+      //source.playbackRate.value = randomPitch;
+
+      grainGain.gain.setValueAtTime(0, now);
+      grainGain.gain.linearRampToValueAtTime(1, now + 0.1);
+      grainGain.gain.linearRampToValueAtTime(0, now + 0.1 + 0.3);
+
+      source.connect(panNode);
+      panNode.connect(grainGain);
+      grainGain.connect(mixGain);
+
+      source.start(now, randomParts, 3);
+  };
+
   var nextDiv = (function() {
 
     var countOtherKick = -1; //for black tiles
@@ -253,6 +310,8 @@ window.onload = function() {
     var countOtherSnare = -1;
     var countCurrentHihat = 0;
     var countOtherHihat = -1;
+    var countCurrentGrain = 0;
+    var countOtherGrain = -1;
     var currentDiv;
     var notCurrentDiv;
 
@@ -268,6 +327,23 @@ window.onload = function() {
         if (countCurrentKick > 15) {
           countOtherKick = -1; //for black tiles
           countCurrentKick = 0;
+        };
+
+        //console.log(currentDiv);
+
+        //return [notCurrentDiv, currentDiv]; 
+      },
+      grainCount: function(divType) {
+
+        notCurrentDiv = divType[++countOtherGrain % divType.length];
+        currentDiv = divType[++countCurrentGrain % divType.length];
+
+        currentDiv.style.borderRadius = "1000px";
+        notCurrentDiv.style.borderRadius = "25px";
+
+        if (countCurrentGrain > 15) {
+          countOtherGrain = -1; //for black tiles
+          countCurrentGrain = 0;
         };
 
         //console.log(currentDiv);
@@ -299,10 +375,6 @@ window.onload = function() {
           countOtherHihat = -1; //for black tiles
           countCurrentHihat = 0;
         };
-
-        //console.log(currentDiv);
-
-        //return [notCurrentDiv, currentDiv]; 
       }
     };
   }());
