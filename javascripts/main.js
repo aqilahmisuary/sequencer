@@ -5,15 +5,18 @@ window.onload = function() {
   var futureTickTime = audioContext.currentTime;
   var current16thNote = 1;
   var tempo = 120.0; //initial tempo
+  var delayVal = 0; //initial delay value
   var timerID = 0;
   var mixGain = audioContext.createGain();
   var filterGain = audioContext.createGain();
   mixGain.connect(audioContext.destination);
   mixGain.gain.value = 0;
   var slider = document.getElementById("myRange");
+  var delaySlider = document.getElementById("delaySlider");
   var startBtn = document.getElementById("startBtn");
   var stopBtn = document.getElementById("stopBtn");
   var tempoVal = document.getElementById("tempoVal");
+  var delayRange = document.getElementById("delayRange");
   var kickDivs = document.querySelectorAll(".kicks");
   var snareDivs = document.querySelectorAll(".snare");
   var hihatDivs = document.querySelectorAll(".hihat");
@@ -75,6 +78,7 @@ window.onload = function() {
     return tempo;
   };
 
+
   function futureTick() {
     var secondsPerBeat = 60.0 / tempo;
     futureTickTime += 0.25 * secondsPerBeat; // "future note"
@@ -106,7 +110,6 @@ window.onload = function() {
 
       if (currentGrainDiv.style.backgroundColor == "lightslategray") {
         grain(time);
-        console.log("running");
       };
 
       nextDiv.kickCount(kicks);
@@ -127,6 +130,52 @@ window.onload = function() {
     }
     timerID = window.setTimeout(scheduler, 50.0);
   };
+
+  //EFFECTS - Delay
+
+  (function(){
+
+    var feedback = audioContext.createGain();
+    var delay = audioContext.createDelay();
+    var leftDelay = audioContext.createDelay();
+    var rightDelay = audioContext.createDelay();
+    var outputmix = audioContext.createGain();
+
+    leftDelay.delayTime.value = 0.375;
+    rightDelay.delayTime.value = 0.375;
+
+    leftDelay.connect(rightDelay);
+
+    var merger = audioContext.createChannelMerger(2);
+    leftDelay.connect(merger, 0, 0);
+    rightDelay.connect(merger, 0, 1);
+    merger.connect(outputmix);
+
+    mixGain.connect(feedback);
+    feedback.connect(leftDelay);
+    rightDelay.connect(feedback);
+    feedback.gain.value = 0.4;
+    leftDelay.connect(rightDelay);
+
+    outputmix.connect(mixGain);
+
+    delaySlider.oninput = function() {
+
+    this.step = "0.1";
+    this.max = "0.9";
+    this.min = "0.0";
+    delayVal = this.value;
+    delayRange.innerHTML = delayVal;
+    outputmix.gain.value = delayVal;
+
+
+    return delayVal;
+
+  };
+
+
+  }());
+
 
   //SYNTHESISED SOUNDS
 
@@ -271,6 +320,8 @@ window.onload = function() {
 
  }());
 
+//GRANULATOR
+
   function grain(time) {
 
       var source = audioContext.createBufferSource();
@@ -280,8 +331,6 @@ window.onload = function() {
 
       source.buffer = buffer;
       var soundDuration = source.buffer.duration;
-
-      console.log(buffer);
 
       var randomParts = Math.random() * (soundDuration - 0.1) + 0.1;
       //var randomPitch = Math.random() * (2 - -0.5) + -0.5;
