@@ -163,7 +163,7 @@ window.onload = function() {
 
     this.step = "0.1";
     this.max = "0.9";
-    this.min = "0.0";
+    this.min = "0";
     delayVal = this.value;
     delayRange.innerHTML = delayVal;
     outputmix.gain.value = delayVal;

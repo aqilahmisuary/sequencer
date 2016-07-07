@@ -5,6 +5,9 @@
     <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css">
     <script src="./javascripts/main.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -16,13 +19,15 @@
         <h1>SequenceR</h1>
         <h2>Web Audio Sequencer</h2>
         <div id="btns-location">
-            <button name="button" id="startBtn">Start</button>
-            <button name="button" id="stopBtn">Stop</button>
+            <button name="button" id="startBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Start</button>
+            <button name="button" id="stopBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Stop</button>
         </div>
-        <p id="inputs">
-            <input type="range" id="myRange"> Tempo <span id="tempoVal"></span>
+        <div id="sliderSection">
+        <p class="inputs">
+            <input type="range" id="myRange" class="mdl-slider mdl-js-slider"  min="0" max="100"> Tempo <span id="tempoVal"></span>
 
         </p>
+    </div>
     </header>
     <p>
         <div id="masterKick" class="multiKicks">
@@ -99,8 +104,8 @@
             <div id="grain15" class="grains"></div>
             <div id="grain16" class="grains"></div>
         </div>
-    <p>
-        <h2><br><input type="range" id="delaySlider"/> Delay: <span id="delayRange">0</span></h2>
+    <p class="inputs">
+        <br><input type="range" id="delaySlider"  class="mdl-slider mdl-js-slider" min="0" max="100" value="0"> Delay: <span id="delayRange"></span>
     </p>
     <footer>
         Sequencer is maintained by <a href="https://github.com/aqilahmisuary">aqilahmisuary</a>

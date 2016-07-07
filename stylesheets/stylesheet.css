@@ -18,7 +18,7 @@ button,
 span,
 footer,
 #inputs {
-    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+    
     font-size: 24px;
     font-style: normal;
     font-variant: normal;
@@ -30,8 +30,17 @@ h1 {
     font-size: 44px;
 }
 
-#inputs {
+#sliderSection {
+    width: 100%;
+
+}
+
+.inputs {
     font-size: 20px;
+    width: 300px;
+    text-align: center;
+    margin: auto;
+    padding-top: 30px;
 }
 
 h1,
@@ -39,7 +48,7 @@ h2,
 footer,
 p {
     text-align: center;
-    margin-top: 18px;
+    margin-top: 28px;
 }
 
 footer {
