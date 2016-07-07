@@ -15,20 +15,42 @@
 </head>
 
 <body>
-    <header>
-        <h1>SequenceR</h1>
-        <h2>Web Audio Sequencer</h2>
-        <div id="btns-location">
-            <button name="button" id="startBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Start</button>
-            <button name="button" id="stopBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Stop</button>
+
+<!-- Uses a header that scrolls with the text, rather than staying
+  locked at the top -->
+<div class="mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--scroll">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title"></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="http://aqilahmisuary.tumblr.com">About</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Other Projects</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="https://github.com/aqilahmisuary">Github</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">        
+        <h4>Web Audio Sequencer</h4>
+        <h6>Synthesized drum sounds + Sequencer + Granulator</h6>
+
+    <div id="btns-location">
+            <button name="button" id="startBtn" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">play_arrow</i></button>
+            <button name="button" id="stopBtn" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">stop</i></button>
         </div>
         <div id="sliderSection">
-        <p class="inputs">
-            <input type="range" id="myRange" class="mdl-slider mdl-js-slider"  min="0" max="100"> Tempo <span id="tempoVal"></span>
-
-        </p>
-    </div>
-    </header>
+            <p class="inputs">
+                <input type="range" id="myRange" class="mdl-slider mdl-js-slider" min="0" max="100"> Tempo <span id="tempoVal"></span>
+            </p>
+        </div>
     <p>
         <div id="masterKick" class="multiKicks">
             <div id="kick1" class="kicks"></div>
@@ -85,32 +107,46 @@
             <div id="hihat16" class="hihat"></div>
         </div>
     </p>
-    <h2>Granulator</h2>
+    <h4>Granulator</h4>
     <div id="masterGranular" class="multiGrains">
-            <div id="grain1" class="grains"></div>
-            <div id="grain2" class="grains"></div>
-            <div id="grain3" class="grains"></div>
-            <div id="grain4" class="grains"></div>
-            <div id="grain5" class="grains"></div>
-            <div id="grain6" class="grains"></div>
-            <div id="grain7" class="grains"></div>
-            <div id="grain8" class="grains"></div>
-            <div id="grain9" class="grains"></div>
-            <div id="grain10" class="grains"></div>
-            <div id="grain11" class="grains"></div>
-            <div id="grain12" class="grains"></div>
-            <div id="grain13" class="grains"></div>
-            <div id="grain14" class="grains"></div>
-            <div id="grain15" class="grains"></div>
-            <div id="grain16" class="grains"></div>
-        </div>
+        <div id="grain1" class="grains"></div>
+        <div id="grain2" class="grains"></div>
+        <div id="grain3" class="grains"></div>
+        <div id="grain4" class="grains"></div>
+        <div id="grain5" class="grains"></div>
+        <div id="grain6" class="grains"></div>
+        <div id="grain7" class="grains"></div>
+        <div id="grain8" class="grains"></div>
+        <div id="grain9" class="grains"></div>
+        <div id="grain10" class="grains"></div>
+        <div id="grain11" class="grains"></div>
+        <div id="grain12" class="grains"></div>
+        <div id="grain13" class="grains"></div>
+        <div id="grain14" class="grains"></div>
+        <div id="grain15" class="grains"></div>
+        <div id="grain16" class="grains"></div>
+    </div>
     <p class="inputs">
-        <br><input type="range" id="delaySlider"  class="mdl-slider mdl-js-slider" min="0" max="100" value="100"> Delay: <span id="delayRange"></span>
+        <br>
+        <input type="range" id="delaySlider" class="mdl-slider mdl-js-slider" min="0" max="100" value="100"> Delay <span id="delayRange"></span>
     </p>
     <footer>
-        Sequencer is maintained by <a href="https://github.com/aqilahmisuary">aqilahmisuary</a>
+        <h6>This web audio sequencer is maintained by <a href="https://github.com/aqilahmisuary">aqilahmisuary</a></h6>
+        <br>
         <br>
     </footer>
+
+    </div>
+  </main>
+</div>
+
+
+
+
+
+
+
+
 </body>
 
 </html>
