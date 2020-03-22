@@ -1,34 +1,34 @@
 window.onload = function() {
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-  var audioContext = new AudioContext();
-  var futureTickTime = audioContext.currentTime;
-  var current16thNote = 1;
-  var tempo = 120.0; //initial tempo
-  var delayVal = 0; //initial delay value
-  var timerID = 0;
-  var mixGain = audioContext.createGain();
-  var filterGain = audioContext.createGain();
+  let audioContext = new AudioContext();
+  let futureTickTime = audioContext.currentTime;
+  let current16thNote = 1;
+  let tempo = 120.0; //initial tempo
+  let delayVal = 0; //initial delay value
+  let timerID = 0;
+  let mixGain = audioContext.createGain();
+  let filterGain = audioContext.createGain();
   mixGain.connect(audioContext.destination);
   mixGain.gain.value = 0;
-  var slider = document.getElementById("myRange");
-  var delaySlider = document.getElementById("delaySlider");
-  var startBtn = document.getElementById("startBtn");
-  var stopBtn = document.getElementById("stopBtn");
-  var tempoVal = document.getElementById("tempoVal");
-  var delayRange = document.getElementById("delayRange");
-  var kickDivs = document.querySelectorAll(".kicks");
-  var snareDivs = document.querySelectorAll(".snare");
-  var hihatDivs = document.querySelectorAll(".hihat");
-  var grainDivs = document.querySelectorAll(".grains");
+  let slider = document.getElementById("myRange");
+  let delaySlider = document.getElementById("delaySlider");
+  let startBtn = document.getElementById("startBtn");
+  let stopBtn = document.getElementById("stopBtn");
+  let tempoVal = document.getElementById("tempoVal");
+  let delayRange = document.getElementById("delayRange");
+  let kickDivs = document.querySelectorAll(".kicks");
+  let snareDivs = document.querySelectorAll(".snare");
+  let hihatDivs = document.querySelectorAll(".hihat");
+  let grainDivs = document.querySelectorAll(".grains");
 
-  var kicks = Array.prototype.slice.call(kickDivs);
-  var snares = Array.prototype.slice.call(snareDivs);
-  var hihats = Array.prototype.slice.call(hihatDivs);
-  var grains = Array.prototype.slice.call(grainDivs);
-  var combinedDivs = kicks.concat(snares);
+  let kicks = Array.prototype.slice.call(kickDivs);
+  let snares = Array.prototype.slice.call(snareDivs);
+  let hihats = Array.prototype.slice.call(hihatDivs);
+  let grains = Array.prototype.slice.call(grainDivs);
+  let combinedDivs = kicks.concat(snares);
 
-  var initDivs = (function() {
+  let initDivs = (function() {
 
     return {
       set: function(divType, colour) {
@@ -380,7 +380,7 @@ window.onload = function() {
 
         //console.log(currentDiv);
 
-        //return [notCurrentDiv, currentDiv]; 
+        //return [notCurrentDiv, currentDiv];
       },
       grainCount: function(divType) {
 
@@ -397,7 +397,7 @@ window.onload = function() {
 
         //console.log(currentDiv);
 
-        //return [notCurrentDiv, currentDiv]; 
+        //return [notCurrentDiv, currentDiv];
       },
       snareCount: function(divType) {
 
