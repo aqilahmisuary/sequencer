@@ -430,7 +430,7 @@ window.onload = function() {
 
 
   startBtn.addEventListener('click', function(time) {
-
+    audioContext.resume();
     scheduler();
 
   }, false);
